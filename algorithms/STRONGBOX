@@ -1,0 +1,61 @@
+
+Strongbox
+
+init(ip, user, pass)
+    IP = ip
+    User = user
+    Pass = pass
+    FS = [Fileset]
+    OP = [Operation]
+
+getIP() -> str
+    return IP
+
+getFilesets() -> [FS]
+    return FS
+
+getOperations() -> [OP]
+    return OP
+
+createFilesetFromPath(Paths) -> FS
+    url = /api/public/file_sets/
+    payload = { Files: Pattern, Includes: Includes, Recursive: Recursive }
+    response =  new request(url, payload)
+    fs = new Fileset(response)
+    FS.append(fs)
+    return fs
+
+createFilesetFromPatter(Pattern, Includes, Recursive) -> FS
+    url = /api/public/file_sets/
+    payload = { Files: Pattern, Includes: Includes, Recursive: Recursive }
+    response =  new request(url, payload)
+    fs = new Fileset(response)
+    FS.append(fs)
+    return fs
+
+deleteFileset(FilesetIndex) -> boolean
+    url = /api/public/file_sets/FilesetIndex/
+    response = new request(url)
+    FS.remove(FilesetIndex)
+    return response == deleted
+
+prefetchFileset(FilesetIndex) -> OP
+    url = /api/public/file_sets/FilesetIndex/prefetch/
+    response = new request(url)
+    op = new Operation(response)
+    OP.append(op)
+    return op
+
+getProgress(OperationIndex) -> OP
+    url = /api/public/operations/OperationIndex/
+    response = new request(url)
+    op = new Operation(response)
+    OP[OperationIndex] = op
+    return op
+
+cancelOperation(OperationIndex) -> boolean
+    url = api/public/operations/OperationIndex/
+    response = new request(url)
+    op = new Operation(response)
+    OP[OperationIndex] = op
+    return op

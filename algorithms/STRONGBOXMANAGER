@@ -1,0 +1,65 @@
+
+StrongboxManager
+
+init
+    SB = [Strongbox]
+    open SBFile
+    for each line
+        IP = line[0]
+        User = line[1]
+        Pass = line[2]
+        addStrongbox(IP, User, Pass, false)
+
+getStrongboxes() -> [Strongbox]
+    return SB
+
+addStrongbox(IP, User, Pass, Save) -> boolean
+    sb = new Strongbox(IP, User, Pass)
+    if sb.getSystemInfo()
+        SB.append(sb)
+        if Save
+            open SBFile
+            write IP, User, Pass
+        return true
+    else
+        return false
+
+getFilesets(StrongboxIndex) -> FS
+    sb = SB[StrongboxIndex]
+    FS = sb.getFS()
+    return FS
+
+getOperations(StrongboxIndex) -> OP
+    sb = SB[StrongboxIndex]
+    OP = sb.getOP()
+    return OP
+
+createFilesetFromPath(StrongboxIndex, Paths) -> FS
+    sb = SB[StrongboxIndex]
+    FS = sb.createFilesetFromPath(Paths)
+    return FS
+
+createFilesetFromPattern(StrongboxIndex, Pattern, Includes, Recursive) -> FS
+    sb = SB[StrongboxIndex]
+    FS = sb.createFilesetFromPattern(Pattern, Includes, Recursive)
+    return FS
+
+deleteFileset(StrongboxIndex, FilesetIndex) -> boolean
+    sb = SB[StrongboxIndex]
+    deleted = sb.deleteFileset(FS)
+    return deleted
+
+prefetchFileset(StrongboxIndex, FilesetIndex) -> OP
+    sb = SB[StrongboxIndex]
+    OP = sb.prefetchFileset(FilesetIndex)
+    return OP
+
+getProgress(StrongboxIndex, OperationIndex) -> OP
+    sb = SB[StrongboxIndex]
+    OP = sb.getProgress(OperationIndex)
+    return OP
+
+cancelOperation(StrongboxIndex, OperationIndex) -> boolean
+    sb = SB[StrongboxIndex]
+    cancelled = sb.cancelOperation(OperationIndex)
+    return cancelled

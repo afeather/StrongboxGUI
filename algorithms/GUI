@@ -1,0 +1,91 @@
+
+GUI
+
+init()
+    addGUIElements()
+    SBManager = StrongboxManager()
+    SB = SBManager.getSB()
+    for each sb in SB
+        IP = sb.getIP()
+        SBListbox.add(ip)
+    SBListbox.select(FIRST)
+
+addStrongboxClick()
+    new StrongboxPopup(GUI)
+
+addStrongbox(IP, User, Pass, Save)
+    connected = SBManager.addStrongbox(IP, User, Pass, Save)
+    if connected
+        SBListbox.add(SB)
+    else
+        error(Could not connect to SB)
+        new StrongboxPopup(GUI)
+
+SBListboxSelect()
+    SB = SBListbox.getSelected()
+    FSListbox.clear()
+    FS = SBManager.getFS(SB)
+    for each fs in FS
+        FSListbox.add(fs)
+    OPListbox.clear()
+    OP = SBManager.getOP(SB)
+    for each op in OP
+        OPListbox.add(OP)
+    for each op in OP
+        if op[state] = running
+            UpdateOperation(op)
+
+createFilesetClick()
+    new FilesetPopup(GUI)
+
+createFileset(INFO)
+    SB = SBListbox.getSelected()
+    if INFO[createfrompath]
+        FS = SBManager.createFSFromPath(SB, INFO[paths])
+    else if INFO[createfrompattern]
+        FS = SBManager.createFSFromPattern(SB, INFO[pattern], INFO[include], INFO[recursive])
+    if FS
+        FSListbox.add(FS)
+    else
+        error(Could not create FS)
+        new FilesetPopup
+
+deleteFilesetClick()
+    SB = SBListbox.getSelected()
+    FS = FSListbox.getSelected()
+    deleted = SBManager.deleteFS(SB, FS)
+    if deleted
+        FSListbox.remove(FS)
+    else
+        error(Could not delete FS)
+
+prefetchFileset()
+    SB = SBListbox.getSelected()
+    FS = FSListbox.getSelected()
+    OP = SBManager.prefetchFS(SB, FS)
+    if OP
+        OPListbox.add(OP)
+        updateOperation(SB,OP)
+    else
+        error(Could not start prefetch)
+
+updateOperation(SB, OP)
+    progress = SBManager.getProgress(SB, OP)
+    listboxEntry = OPListbox.get(OP)
+    if progress[state] = completed
+        listboxEntry = Operation Complete
+    else if progress[state] = failed
+        listboxEntry = Operation Failed
+    else
+        listboxEntry = progress[progress] %
+        sleep 1m
+        updateOperation(OP)
+
+cancelOperationClick()
+    SB = SBListbox.getSelected()
+    FS = FSListbox.getSelected()
+    cancelled = SBManager.cancelOP(SB, OP)
+    if cancelled
+        OPListbox.delete(OP)
+    else
+        error(could not cancel OP)

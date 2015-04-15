@@ -1,0 +1,48 @@
+
+--------------------------------------------------------------------------------
+|  [X] STRONGBOX GUI                                                           |
+--------------------------------------------------------------------------------
+|                                                                              |
+|   -------------     -----------------------                                  |
+|  | STRONGBOX1  |    | FILESETS | OPERATIONS |                            |   |
+|  | STRONGBOX2  |    |          ------------------------------------------|   |
+|  | STRONGBOX3  |    | FILESET ID NAME PATH           INCLUDES FILECOUNT  |   |
+|  |             |    | 1          A    PATH/A, PATH/B          2          |   |
+|  |             |    | 2          B    PATH/          *        2          |   |
+|  |             |    |                                                    |   |
+|  |             |    |                                                    |   |
+|  |             |    |                                                    |   |
+|  |             |    |                                                    |   |
+|  |             |    |                                                    |   |
+|  |             |    |                                                    |   |
+|   -------------      ----------------------------------------------------    |
+|  [Add Strongbox]     [Create FS] [Delete FS] [Prefetch FS]                   |
+|                                                                              |
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+|  [X] STRONGBOX GUI                                                           |
+--------------------------------------------------------------------------------
+|                                                                              |
+|   -------------     ------------------------                                 |
+|  | STRONGBOX1  |    | FILESETS | OPERATIONS |                                |
+|  | STRONGBOX2  |    |----------              ----------------------------    |
+|  | STRONGBOX3  |    | OPERATION ID FILESET PROGRESS         STATUS       |   |
+|  |             |    | 1            1       [#######---] %70 RUNNING      |   |
+|  |             |    | 2            1                        FAILED       |   |
+|  |             |    | 3            2       [----------] %00 CREATED      |   |
+|  |             |    |                                                    |   |
+|  |             |    |                                                    |   |
+|  |             |    |                                                    |   |
+|  |             |    |                                                    |   |
+|  |             |    |                                                    |   |
+|   -------------      ----------------------------------------------------    |
+|  [Add Strongbox]    [Cancel OP]                                              |
+|                                                                              |
+--------------------------------------------------------------------------------
+
+GUI - handles the GUI elements and events
+StrongboxManager - manages the Strongboxes and calls each method on the correct strongbox
+Strongbox - contains information about a single strongbox and keeps track of filesets and operations
+Fileset - a class to convert a JSON response to a fileset object
+Operation - a class to convert a JSON response to an operation object

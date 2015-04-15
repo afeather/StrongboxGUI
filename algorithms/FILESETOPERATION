@@ -1,0 +1,15 @@
+
+Fileset
+
+init(JSON)
+    ID = JSON[id]
+    Name = JSON[name]
+    FileCount = JSON[name]
+
+
+Operation
+
+init(JSON)
+    ID = JSON[id]
+    State = JSON[state]
+    Progress = JSON[progress]
